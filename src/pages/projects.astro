@@ -1,0 +1,110 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { PROJECTS } from '../data/site';
+
+const active   = PROJECTS.filter(p => p.status === '公開中');
+const progress = PROJECTS.filter(p => p.status === '進行中');
+
+const HP_WORKS = [
+  { name: 'e-鎌倉ITタウン',     url: 'https://www.kcn-net.org/' },
+  { name: '横浜ガイドライン',   url: 'https://yokokanaguide.org/' },
+  { name: '鎌倉ガイドブック',   url: 'https://www.kcn-net.org/guide/' },
+  { name: '日当たり不動産',     url: 'https://hiatari.org/' },
+  { name: 'らら鎌倉ネット',     url: 'https://rarara.kcn-net.org/' },
+];
+---
+
+<Layout title="プロジェクト" page="/projects">
+
+  <div class="bg-[#26215C] text-white px-4 pt-5 pb-6">
+    <h1 class="text-xl font-bold mb-1">
+      <i class="ti ti-puzzle text-lg align-[-2px] mr-2"></i>プロジェクト一覧
+    </h1>
+    <p class="text-sm text-white/80">鎌倉市民のためのデジタル公共財</p>
+  </div>
+
+  <!-- 公開中プロジェクト -->
+  <section class="px-4 py-5">
+    <div class="flex items-center gap-2 mb-3">
+      <span class="w-1 h-4 bg-[#1a5c3a] rounded-full inline-block"></span>
+      <p class="text-[11px] text-stone-400 uppercase tracking-widest font-medium">公開中</p>
+    </div>
+    <div class="flex flex-col gap-3">
+      {active.map(proj => (
+        <a href={proj.url} target="_blank" rel="noopener"
+          class="block bg-white border border-stone-200 rounded-2xl p-4 no-underline hover:border-[#1a5c3a]/40 transition-colors">
+          <div class="flex items-start justify-between gap-2 mb-2">
+            <p class="text-sm font-medium text-stone-800">{proj.title}</p>
+            <div class="flex items-center gap-1.5 flex-shrink-0">
+              <span class="text-[10px] bg-[#e8f4ee] text-[#0F6E56] px-2 py-0.5 rounded-full">{proj.status}</span>
+              <i class="ti ti-external-link text-stone-300 text-sm"></i>
+            </div>
+          </div>
+          <p class="text-xs text-stone-500 leading-relaxed mb-2.5">{proj.desc}</p>
+          <div class="flex items-center justify-between">
+            <div class="flex gap-1.5 flex-wrap">
+              {proj.tags.map(tag => (
+                <span class="text-[10px] bg-stone-100 text-stone-500 px-2 py-0.5 rounded-full">{tag}</span>
+              ))}
+            </div>
+            <p class="text-[10px] text-stone-400">更新: {proj.updated}</p>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <div class="h-px bg-stone-100 mx-4"></div>
+
+  <!-- 進行中 -->
+  {progress.length > 0 && (
+    <section class="px-4 py-5">
+      <div class="flex items-center gap-2 mb-3">
+        <span class="w-1 h-4 bg-amber-400 rounded-full inline-block"></span>
+        <p class="text-[11px] text-stone-400 uppercase tracking-widest font-medium">進行中</p>
+      </div>
+      <div class="flex flex-col gap-3">
+        {progress.map(proj => (
+          <a href={proj.url} target="_blank" rel="noopener"
+            class="block bg-white border border-stone-200 rounded-2xl p-4 no-underline hover:border-amber-400/40 transition-colors">
+            <div class="flex items-start justify-between gap-2 mb-2">
+              <p class="text-sm font-medium text-stone-800">{proj.title}</p>
+              <span class="text-[10px] bg-amber-50 text-amber-700 px-2 py-0.5 rounded-full flex-shrink-0">{proj.status}</span>
+            </div>
+            <p class="text-xs text-stone-500 leading-relaxed mb-2.5">{proj.desc}</p>
+            <div class="flex gap-1.5 flex-wrap">
+              {proj.tags.map(tag => (
+                <span class="text-[10px] bg-stone-100 text-stone-500 px-2 py-0.5 rounded-full">{tag}</span>
+              ))}
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <div class="h-px bg-stone-100 mx-4"></div>
+
+  <!-- HP制作実績 -->
+  <section class="px-4 py-5" id="homepage">
+    <div class="flex items-center gap-2 mb-3">
+      <span class="w-1 h-4 bg-rose-400 rounded-full inline-block"></span>
+      <p class="text-[11px] text-stone-400 uppercase tracking-widest font-medium">HP制作・保守実績</p>
+    </div>
+    <div class="bg-white border border-stone-200 rounded-2xl overflow-hidden">
+      {HP_WORKS.map((work, i) => (
+        <a href={work.url} target="_blank" rel="noopener"
+          class={`flex items-center justify-between px-4 py-3 no-underline hover:bg-stone-50 transition-colors
+            ${i < HP_WORKS.length - 1 ? 'border-b border-stone-100' : ''}`}>
+          <span class="text-sm text-stone-700">{work.name}</span>
+          <i class="ti ti-external-link text-stone-300 text-sm"></i>
+        </a>
+      ))}
+    </div>
+    <p class="text-xs text-stone-400 mt-3 leading-relaxed">
+      その他、各種NPO団体・地域企業のウェブサイト制作・保守を承っています。
+      お見積もり・ご相談は無料です。
+    </p>
+  </section>
+
+</Layout>

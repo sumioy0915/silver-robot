@@ -1,0 +1,160 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { COURSES, SITE } from '../data/site';
+
+const senior = COURSES.filter(c => c.target.includes('シニア'));
+const junior = COURSES.filter(c => c.target.includes('こども') || c.target.includes('小学'));
+const other  = COURSES.filter(c => !c.target.includes('シニア') && !c.target.includes('こども') && !c.target.includes('小学'));
+
+const colorMap: Record<string, { icon: string; bg: string; text: string }> = {
+  green:  { icon: 'text-[#0F6E56]', bg: 'bg-[#e8f4ee]', text: 'text-[#0F6E56]' },
+  purple: { icon: 'text-[#534AB7]', bg: 'bg-[#EEEDFE]', text: 'text-[#534AB7]' },
+  gray:   { icon: 'text-stone-500',  bg: 'bg-stone-100',  text: 'text-stone-600'  },
+};
+---
+
+<Layout title="IT講座・プログラミング" page="/courses">
+
+  <div class="bg-[#0F6E56] text-white px-4 pt-5 pb-6">
+    <h1 class="text-xl font-bold mb-1">
+      <i class="ti ti-device-laptop text-lg align-[-2px] mr-2"></i>IT講座・プログラミング
+    </h1>
+    <p class="text-sm text-white/80">シニアからこどもまで、あなたに合った学び</p>
+  </div>
+
+  <!-- シニア向け -->
+  <section class="px-4 py-5">
+    <div class="flex items-center gap-2 mb-3">
+      <span class="w-1 h-4 bg-[#1a5c3a] rounded-full inline-block"></span>
+      <p class="text-[11px] text-stone-400 uppercase tracking-widest font-medium">シニア向け</p>
+    </div>
+    <div class="flex flex-col gap-3">
+      {senior.map(course => {
+        const c = colorMap[course.color] ?? colorMap.gray;
+        return (
+          <div class="bg-white border border-stone-200 rounded-2xl p-4">
+            <div class="flex items-start gap-3 mb-3">
+              <div class={`w-10 h-10 rounded-xl ${c.bg} flex items-center justify-center text-xl flex-shrink-0`}>
+                {course.icon}
+              </div>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2 flex-wrap">
+                  <p class="text-sm font-medium text-stone-800">{course.title}</p>
+                  {course.isNew && (
+                    <span class="text-[10px] bg-[#e8f4ee] text-[#0F6E56] px-2 py-0.5 rounded-full font-medium">NEW</span>
+                  )}
+                </div>
+                <p class="text-xs text-stone-400 mt-0.5">{course.target} · {course.sessions}</p>
+              </div>
+              <span class="text-sm font-medium text-stone-700 flex-shrink-0">{course.fee}</span>
+            </div>
+            <p class="text-xs text-stone-500 leading-relaxed mb-2.5">{course.desc}</p>
+            <div class="flex gap-1.5 flex-wrap">
+              {course.tags.map(tag => (
+                <span class={`text-[10px] ${c.bg} ${c.text} px-2 py-0.5 rounded-full`}>{tag}</span>
+              ))}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </section>
+
+  <div class="h-px bg-stone-100 mx-4"></div>
+
+  <!-- こども向け -->
+  <section class="px-4 py-5" id="programming">
+    <div class="flex items-center gap-2 mb-3">
+      <span class="w-1 h-4 bg-[#534AB7] rounded-full inline-block"></span>
+      <p class="text-[11px] text-stone-400 uppercase tracking-widest font-medium">こども向け</p>
+    </div>
+    <div class="flex flex-col gap-3">
+      {junior.map(course => {
+        const c = colorMap[course.color] ?? colorMap.gray;
+        return (
+          <div class="bg-white border border-stone-200 rounded-2xl p-4">
+            <div class="flex items-start gap-3 mb-3">
+              <div class={`w-10 h-10 rounded-xl ${c.bg} flex items-center justify-center text-xl flex-shrink-0`}>
+                {course.icon}
+              </div>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2 flex-wrap">
+                  <p class="text-sm font-medium text-stone-800">{course.title}</p>
+                  {course.isNew && (
+                    <span class="text-[10px] bg-[#EEEDFE] text-[#534AB7] px-2 py-0.5 rounded-full font-medium">NEW</span>
+                  )}
+                </div>
+                <p class="text-xs text-stone-400 mt-0.5">{course.target} · {course.sessions}</p>
+              </div>
+              <span class="text-sm font-medium text-stone-700 flex-shrink-0">{course.fee}</span>
+            </div>
+            <p class="text-xs text-stone-500 leading-relaxed mb-2.5">{course.desc}</p>
+            <div class="flex gap-1.5 flex-wrap">
+              {course.tags.map(tag => (
+                <span class={`text-[10px] ${c.bg} ${c.text} px-2 py-0.5 rounded-full`}>{tag}</span>
+              ))}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </section>
+
+  <div class="h-px bg-stone-100 mx-4"></div>
+
+  <!-- 個別・その他 -->
+  {other.length > 0 && (
+    <section class="px-4 py-5">
+      <div class="flex items-center gap-2 mb-3">
+        <span class="w-1 h-4 bg-stone-400 rounded-full inline-block"></span>
+        <p class="text-[11px] text-stone-400 uppercase tracking-widest font-medium">個別レッスン・その他</p>
+      </div>
+      {other.map(course => {
+        const c = colorMap[course.color] ?? colorMap.gray;
+        return (
+          <div class="bg-white border border-stone-200 rounded-2xl p-4 mb-3">
+            <div class="flex items-start gap-3 mb-3">
+              <div class={`w-10 h-10 rounded-xl ${c.bg} flex items-center justify-center text-xl flex-shrink-0`}>
+                {course.icon}
+              </div>
+              <div class="flex-1">
+                <p class="text-sm font-medium text-stone-800">{course.title}</p>
+                <p class="text-xs text-stone-400 mt-0.5">{course.target} · {course.sessions}</p>
+              </div>
+              <span class="text-sm font-medium text-stone-700 flex-shrink-0">{course.fee}</span>
+            </div>
+            <p class="text-xs text-stone-500 leading-relaxed">{course.desc}</p>
+          </div>
+        );
+      })}
+    </section>
+  )}
+
+  <!-- 申し込みの流れ -->
+  <section class="px-4 py-5 bg-stone-50">
+    <p class="text-[11px] text-stone-400 uppercase tracking-widest mb-4 font-medium">申し込みの流れ</p>
+    <div class="flex flex-col gap-4">
+      {[
+        { n: 1, title: '講座を選ぶ',        sub: '対象・日程・会場を確認してください' },
+        { n: 2, title: '電話またはメールで予約', sub: `${SITE.phone} / ${SITE.email}` },
+        { n: 3, title: '当日参加',           sub: '会場で参加費をお支払いください' },
+      ].map(step => (
+        <div class="flex gap-3 items-start">
+          <div class="w-6 h-6 rounded-full bg-[#1a5c3a] text-white text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">
+            {step.n}
+          </div>
+          <div>
+            <p class="text-sm font-medium text-stone-800">{step.title}</p>
+            <p class="text-xs text-stone-400 mt-0.5">{step.sub}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+    <a href="/contact"
+      class="mt-5 flex items-center justify-center gap-2 bg-[#1a5c3a] text-white text-sm font-medium px-4 py-3 rounded-xl no-underline">
+      <i class="ti ti-mail text-base"></i>
+      講座について問い合わせる
+    </a>
+  </section>
+
+</Layout>

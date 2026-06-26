@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+:root {
+  --kcn-green: #1a5c3a;
+  --kcn-green-mid: #2d7a52;
+  --kcn-green-light: #e8f4ee;
+  --kcn-green-text: #0F6E56;
+}
+
+* { box-sizing: border-box; }
+
+html {
+  font-family: 'Noto Sans JP', system-ui, sans-serif;
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #f8f8f6;
+  color: #1a1a1a;
+  min-height: 100vh;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
