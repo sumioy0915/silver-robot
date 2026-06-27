@@ -5,7 +5,7 @@ import { EVENTS, SITE } from '../data/site';
 
 <Layout title="イベント" page="/events">
 
-  <div class="bg-[#1a5c3a] text-white px-4 pt-5 pb-6">
+  <div class="bg-[#1a5c3a] text-white px-4 md:px-8 pt-5 pb-6">
     <h1 class="text-xl font-bold mb-1">
       <i class="ti ti-calendar text-lg align-[-2px] mr-2"></i>イベント・講座スケジュール
     </h1>
@@ -13,7 +13,7 @@ import { EVENTS, SITE } from '../data/site';
   </div>
 
   <!-- フィルタータグ -->
-  <div class="px-4 py-3 bg-white border-b border-stone-100 overflow-x-auto">
+  <div class="px-4 md:px-8 py-3 bg-white border-b border-stone-100 overflow-x-auto">
     <div class="flex gap-2 min-w-max">
       <button class="filter-btn active text-xs px-3 py-1.5 rounded-full border border-[#1a5c3a] bg-[#1a5c3a] text-white transition-colors" data-filter="all">
         すべて
@@ -33,9 +33,9 @@ import { EVENTS, SITE } from '../data/site';
     </div>
   </div>
 
-  <section class="px-4 py-4">
+  <section class="px-4 md:px-8 py-4">
     <p class="text-[11px] text-stone-400 uppercase tracking-widest mb-3 font-medium">7月の予定</p>
-    <div class="flex flex-col gap-3" id="event-list">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-3" id="event-list">
       {EVENTS.map(ev => (
         <div
           class="event-card flex gap-3 items-start bg-white border border-stone-200 rounded-xl p-3.5"
@@ -84,12 +84,12 @@ import { EVENTS, SITE } from '../data/site';
     </p>
     <div class="mt-3 flex flex-col gap-2">
       <a href={`tel:${SITE.phone.replace(/-/g,'')}`}
-        class="flex items-center gap-2 bg-[#1a5c3a] text-white text-sm font-medium px-4 py-2.5 rounded-xl no-underline">
+        class="flex items-center gap-2 bg-[#1a5c3a] text-white text-sm font-medium px-4 md:px-8 py-2.5 rounded-xl no-underline">
         <i class="ti ti-phone text-base"></i>
         {SITE.phone} に電話する
       </a>
       <a href="/contact"
-        class="flex items-center gap-2 bg-white border border-[#1a5c3a] text-[#1a5c3a] text-sm font-medium px-4 py-2.5 rounded-xl no-underline">
+        class="flex items-center gap-2 bg-white border border-[#1a5c3a] text-[#1a5c3a] text-sm font-medium px-4 md:px-8 py-2.5 rounded-xl no-underline">
         <i class="ti ti-mail text-base"></i>
         メールで問い合わせる
       </a>

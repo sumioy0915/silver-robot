@@ -15,7 +15,7 @@ const colorMap: Record<string, { icon: string; bg: string; text: string }> = {
 
 <Layout title="IT講座・プログラミング" page="/courses">
 
-  <div class="bg-[#0F6E56] text-white px-4 pt-5 pb-6">
+  <div class="bg-[#0F6E56] text-white px-4 md:px-8 pt-5 pb-6">
     <h1 class="text-xl font-bold mb-1">
       <i class="ti ti-device-laptop text-lg align-[-2px] mr-2"></i>IT講座・プログラミング
     </h1>
@@ -23,12 +23,12 @@ const colorMap: Record<string, { icon: string; bg: string; text: string }> = {
   </div>
 
   <!-- シニア向け -->
-  <section class="px-4 py-5">
+  <section class="px-4 md:px-8 py-5">
     <div class="flex items-center gap-2 mb-3">
       <span class="w-1 h-4 bg-[#1a5c3a] rounded-full inline-block"></span>
       <p class="text-[11px] text-stone-400 uppercase tracking-widest font-medium">シニア向け</p>
     </div>
-    <div class="flex flex-col gap-3">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
       {senior.map(course => {
         const c = colorMap[course.color] ?? colorMap.gray;
         return (
@@ -63,12 +63,12 @@ const colorMap: Record<string, { icon: string; bg: string; text: string }> = {
   <div class="h-px bg-stone-100 mx-4"></div>
 
   <!-- こども向け -->
-  <section class="px-4 py-5" id="programming">
+  <section class="px-4 md:px-8 py-5" id="programming">
     <div class="flex items-center gap-2 mb-3">
       <span class="w-1 h-4 bg-[#534AB7] rounded-full inline-block"></span>
       <p class="text-[11px] text-stone-400 uppercase tracking-widest font-medium">こども向け</p>
     </div>
-    <div class="flex flex-col gap-3">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
       {junior.map(course => {
         const c = colorMap[course.color] ?? colorMap.gray;
         return (
@@ -104,7 +104,7 @@ const colorMap: Record<string, { icon: string; bg: string; text: string }> = {
 
   <!-- 個別・その他 -->
   {other.length > 0 && (
-    <section class="px-4 py-5">
+    <section class="px-4 md:px-8 py-5">
       <div class="flex items-center gap-2 mb-3">
         <span class="w-1 h-4 bg-stone-400 rounded-full inline-block"></span>
         <p class="text-[11px] text-stone-400 uppercase tracking-widest font-medium">個別レッスン・その他</p>
@@ -131,7 +131,7 @@ const colorMap: Record<string, { icon: string; bg: string; text: string }> = {
   )}
 
   <!-- 申し込みの流れ -->
-  <section class="px-4 py-5 bg-stone-50">
+  <section class="px-4 md:px-8 py-5 bg-stone-50">
     <p class="text-[11px] text-stone-400 uppercase tracking-widest mb-4 font-medium">申し込みの流れ</p>
     <div class="flex flex-col gap-4">
       {[
@@ -151,7 +151,7 @@ const colorMap: Record<string, { icon: string; bg: string; text: string }> = {
       ))}
     </div>
     <a href="/contact"
-      class="mt-5 flex items-center justify-center gap-2 bg-[#1a5c3a] text-white text-sm font-medium px-4 py-3 rounded-xl no-underline">
+      class="mt-5 flex items-center justify-center gap-2 bg-[#1a5c3a] text-white text-sm font-medium px-4 md:px-8 py-3 rounded-xl no-underline">
       <i class="ti ti-mail text-base"></i>
       講座について問い合わせる
     </a>

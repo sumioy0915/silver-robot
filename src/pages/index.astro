@@ -1,29 +1,47 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { SITE, EVENTS, COURSES } from '../data/site';
+import { SITE, EVENTS } from '../data/site';
 
 const upcomingEvents = EVENTS.slice(0, 3);
+const stats = [
+  { n: '23年', label: '活動実績' },
+  { n: '5+',  label: 'プロジェクト' },
+  { n: '50+', label: '年間講座' },
+];
 ---
 
 <Layout page="/">
 
-  <section class="bg-[#1a5c3a] text-white px-4 pt-6 pb-8 relative overflow-hidden">
+  <!-- ヒーロー：PCは左右2カラム -->
+  <section class="bg-[#1a5c3a] text-white px-4 md:px-8 pt-6 md:pt-10 pb-8 md:pb-12 relative overflow-hidden md:rounded-b-3xl">
     <div class="absolute right-0 top-0 w-32 h-32 rounded-full bg-white/5 -translate-y-8 translate-x-8"></div>
     <div class="absolute right-8 bottom-0 w-16 h-16 rounded-full bg-white/5 translate-y-4"></div>
-    <div class="relative z-10">
-      <span class="inline-block text-xs bg-white/20 rounded-full px-3 py-1 mb-3">NPO法人</span>
-      <h1 class="text-2xl font-bold leading-tight mb-1">{SITE.name}</h1>
-      <p class="text-sm text-white/80 mb-5">{SITE.tagline}</p>
-      <a href="/contact" class="inline-flex items-center gap-2 bg-white text-[#1a5c3a] text-sm font-medium px-5 py-2.5 rounded-full hover:bg-stone-100 transition-colors">
-        <i class="ti ti-phone text-base"></i>
-        まずはご相談ください
-      </a>
+    <div class="relative z-10 md:flex md:items-center md:gap-10">
+      <div class="md:flex-[1.4]">
+        <span class="inline-block text-xs bg-white/20 rounded-full px-3 py-1 mb-3">NPO法人</span>
+        <h1 class="text-2xl md:text-4xl font-bold leading-tight mb-1">{SITE.name}</h1>
+        <p class="text-sm md:text-base text-white/80 mb-5">{SITE.tagline}</p>
+        <a href="/contact" class="inline-flex items-center gap-2 bg-white text-[#1a5c3a] text-sm font-medium px-5 py-2.5 rounded-full hover:bg-stone-100 transition-colors no-underline">
+          <i class="ti ti-phone text-base"></i>
+          まずはご相談ください
+        </a>
+      </div>
+      <!-- 実績数字（PCのみ） -->
+      <div class="hidden md:flex md:flex-1 gap-3 mt-0">
+        {stats.map(s => (
+          <div class="flex-1 bg-white/10 rounded-xl p-4 text-center">
+            <div class="text-2xl font-bold leading-none">{s.n}</div>
+            <div class="text-xs text-white/80 mt-1.5">{s.label}</div>
+          </div>
+        ))}
+      </div>
     </div>
   </section>
 
-  <section class="px-4 py-5">
+  <!-- サービス：スマホ2列 / PC4列 -->
+  <section class="px-4 md:px-8 py-5 md:py-8">
     <p class="text-[11px] text-stone-400 uppercase tracking-widest mb-3 font-medium">サービス</p>
-    <div class="grid grid-cols-2 gap-3">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
       <a href="/courses" class="block bg-white border border-stone-200 rounded-2xl p-4 hover:border-[#1a5c3a]/40 transition-colors no-underline">
         <div class="w-9 h-9 rounded-xl bg-[#e8f4ee] flex items-center justify-center mb-2.5">
           <i class="ti ti-device-laptop text-[#1a5c3a] text-lg"></i>
@@ -55,74 +73,89 @@ const upcomingEvents = EVENTS.slice(0, 3);
     </div>
   </section>
 
-  <div class="h-px bg-stone-100 mx-4"></div>
-
-  <section class="px-4 py-5">
-    <div class="flex items-center justify-between mb-3">
-      <p class="text-[11px] text-stone-400 uppercase tracking-widest font-medium">直近のイベント</p>
-      <a href="/events" class="text-xs text-[#1a5c3a] font-medium flex items-center gap-0.5">
-        すべて見る <i class="ti ti-chevron-right text-sm"></i>
-      </a>
-    </div>
-    <div class="flex flex-col gap-3">
-      {upcomingEvents.map(ev => (
-        <a href="/events" class="flex gap-3 items-center bg-white border border-stone-200 rounded-xl p-3 hover:border-[#1a5c3a]/40 transition-colors no-underline">
-          <div class="bg-[#e8f4ee] rounded-lg px-3 py-2 text-center flex-shrink-0 min-w-[44px]">
-            <div class="text-[10px] text-[#0F6E56] font-medium">{ev.month}</div>
-            <div class="text-xl font-bold text-[#1a5c3a] leading-none">{ev.day}</div>
-          </div>
-          <div class="flex-1 min-w-0">
-            <p class="text-sm font-medium text-stone-800 truncate">{ev.title}</p>
-            <p class="text-xs text-stone-400 mt-0.5">{ev.venue} · {ev.fee}</p>
-            <div class="flex gap-1.5 mt-1.5 flex-wrap">
-              {ev.tags.map(tag => (
-                <span class="text-[10px] bg-[#e8f4ee] text-[#0F6E56] px-2 py-0.5 rounded-full">{tag}</span>
-              ))}
-              {ev.reservation && (
-                <span class="text-[10px] bg-amber-50 text-amber-700 px-2 py-0.5 rounded-full">要予約</span>
-              )}
-            </div>
-          </div>
-          <i class="ti ti-chevron-right text-stone-300 text-lg flex-shrink-0"></i>
+  <!-- イベント＋お知らせ：PCは2カラム -->
+  <section class="px-4 md:px-8 py-5 md:py-3 md:grid md:grid-cols-[1.4fr_1fr] md:gap-10">
+    <div>
+      <div class="flex items-center justify-between mb-3">
+        <p class="text-[11px] text-stone-400 uppercase tracking-widest font-medium">直近のイベント</p>
+        <a href="/events" class="text-xs text-[#1a5c3a] font-medium flex items-center gap-0.5 no-underline">
+          すべて見る <i class="ti ti-chevron-right text-sm"></i>
         </a>
-      ))}
+      </div>
+      <div class="flex flex-col gap-3">
+        {upcomingEvents.map(ev => (
+          <a href="/events" class="flex gap-3 items-center bg-white border border-stone-200 rounded-xl p-3 hover:border-[#1a5c3a]/40 transition-colors no-underline">
+            <div class="bg-[#e8f4ee] rounded-lg px-3 py-2 text-center flex-shrink-0 min-w-[44px]">
+              <div class="text-[10px] text-[#0F6E56] font-medium">{ev.month}</div>
+              <div class="text-xl font-bold text-[#1a5c3a] leading-none">{ev.day}</div>
+            </div>
+            <div class="flex-1 min-w-0">
+              <p class="text-sm font-medium text-stone-800 truncate">{ev.title}</p>
+              <p class="text-xs text-stone-400 mt-0.5">{ev.venue} · {ev.fee}</p>
+              <div class="flex gap-1.5 mt-1.5 flex-wrap">
+                {ev.tags.map(tag => (
+                  <span class="text-[10px] bg-[#e8f4ee] text-[#0F6E56] px-2 py-0.5 rounded-full">{tag}</span>
+                ))}
+                {ev.reservation && (
+                  <span class="text-[10px] bg-amber-50 text-amber-700 px-2 py-0.5 rounded-full">要予約</span>
+                )}
+              </div>
+            </div>
+            <i class="ti ti-chevron-right text-stone-300 text-lg flex-shrink-0"></i>
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <div class="mt-6 md:mt-0">
+      <p class="text-[11px] text-stone-400 uppercase tracking-widest mb-3 font-medium">お知らせ</p>
+      <div class="flex flex-col gap-3">
+        <div class="flex gap-3 items-start">
+          <div class="w-2 h-2 rounded-full bg-[#1a5c3a] flex-shrink-0 mt-1.5"></div>
+          <div>
+            <p class="text-sm text-stone-800">「色の音楽」スマホサービス開始のご案内</p>
+            <p class="text-xs text-stone-400 mt-0.5">2026/06/16</p>
+          </div>
+        </div>
+        <div class="flex gap-3 items-start">
+          <div class="w-2 h-2 rounded-full bg-[#534AB7] flex-shrink-0 mt-1.5"></div>
+          <div>
+            <p class="text-sm text-stone-800">プログラミング体験教室（5月）実施報告</p>
+            <p class="text-xs text-stone-400 mt-0.5">2026/05/30</p>
+          </div>
+        </div>
+        <div class="flex gap-3 items-start">
+          <div class="w-2 h-2 rounded-full bg-stone-300 flex-shrink-0 mt-1.5"></div>
+          <div>
+            <p class="text-sm text-stone-800">2025年度事業報告書を公開しました</p>
+            <p class="text-xs text-stone-400 mt-0.5">2026/04/30</p>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <div class="h-px bg-stone-100 mx-4"></div>
-
-  <section class="px-4 py-5">
-    <p class="text-[11px] text-stone-400 uppercase tracking-widest mb-3 font-medium">お知らせ</p>
-    <div class="flex flex-col gap-3">
-      <div class="flex gap-3 items-start">
-        <div class="w-2 h-2 rounded-full bg-[#1a5c3a] flex-shrink-0 mt-1.5"></div>
-        <div>
-          <p class="text-sm text-stone-800">「色の音楽」スマホサービス開始のご案内</p>
-          <p class="text-xs text-stone-400 mt-0.5">2026/06/16</p>
-        </div>
+  <!-- フッター：PCは3カラム -->
+  <footer class="bg-stone-100 px-4 md:px-8 py-5 md:py-8 mt-4 md:mt-8 md:rounded-t-3xl">
+    <div class="md:grid md:grid-cols-3 md:gap-8">
+      <div class="text-xs text-stone-500 space-y-1">
+        <p class="text-sm font-medium text-stone-700 mb-1.5">鎌倉市民ネット（KCN）</p>
+        <p><i class="ti ti-map-pin text-sm align-[-2px] mr-1"></i>{SITE.address}</p>
+        <p class="md:pl-4">{SITE.access}</p>
       </div>
-      <div class="flex gap-3 items-start">
-        <div class="w-2 h-2 rounded-full bg-[#534AB7] flex-shrink-0 mt-1.5"></div>
-        <div>
-          <p class="text-sm text-stone-800">プログラミング体験教室（5月）実施報告</p>
-          <p class="text-xs text-stone-400 mt-0.5">2026/05/30</p>
-        </div>
+      <div class="hidden md:block text-xs text-stone-500">
+        <p class="text-sm font-medium text-stone-700 mb-1.5">メニュー</p>
+        <a href="/events" class="block py-0.5 no-underline text-stone-500 hover:text-[#1a5c3a]">イベント</a>
+        <a href="/courses" class="block py-0.5 no-underline text-stone-500 hover:text-[#1a5c3a]">講座</a>
+        <a href="/projects" class="block py-0.5 no-underline text-stone-500 hover:text-[#1a5c3a]">プロジェクト</a>
       </div>
-      <div class="flex gap-3 items-start">
-        <div class="w-2 h-2 rounded-full bg-stone-300 flex-shrink-0 mt-1.5"></div>
-        <div>
-          <p class="text-sm text-stone-800">2025年度事業報告書を公開しました</p>
-          <p class="text-xs text-stone-400 mt-0.5">2026/04/30</p>
-        </div>
+      <div class="text-xs text-stone-500 mt-3 md:mt-0">
+        <p class="text-sm font-medium text-stone-700 mb-1.5">お問い合わせ</p>
+        <p><i class="ti ti-phone text-sm align-[-2px] mr-1"></i>{SITE.phone}</p>
+        <p><i class="ti ti-mail text-sm align-[-2px] mr-1"></i>{SITE.email}</p>
       </div>
     </div>
-  </section>
-
-  <footer class="bg-stone-100 px-4 py-5 text-xs text-stone-500 space-y-1 mt-4">
-    <p><i class="ti ti-map-pin text-sm align-[-2px] mr-1"></i>{SITE.address}</p>
-    <p><i class="ti ti-phone text-sm align-[-2px] mr-1"></i>{SITE.phone}
-       <i class="ti ti-mail text-sm align-[-2px] mr-1 ml-3"></i>{SITE.email}</p>
-    <p class="pt-1 text-[11px] text-stone-400">© 2001–2026 Kamakura Citizens Net</p>
+    <p class="pt-4 mt-4 border-t border-stone-200 text-[11px] text-stone-400">© 2001–2026 Kamakura Citizens Net</p>
   </footer>
 
 </Layout>

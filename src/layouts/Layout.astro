@@ -24,47 +24,63 @@ const { title = SITE.name, description = SITE.tagline, page = '' } = Astro.props
 </head>
 <body class="bg-stone-50 text-stone-900 font-sans">
 
-  <!-- mobile frame -->
-  <div class="min-h-screen max-w-md mx-auto flex flex-col bg-white shadow-sm relative">
-
-    <!-- top header (desktop hint) -->
-    <header class="bg-[#1a5c3a] text-white px-4 py-3 flex items-center justify-between sticky top-0 z-30">
-      <a href="/" class="flex items-center gap-2 no-underline text-white">
+  <!-- ===== 上部ヘッダー（PCは横メニュー / スマホは簡易ヘッダー） ===== -->
+  <header class="bg-[#1a5c3a] text-white sticky top-0 z-30">
+    <div class="max-w-5xl mx-auto px-4 md:px-6 py-3 flex items-center gap-4">
+      <a href="/" class="flex items-center gap-2 no-underline text-white flex-shrink-0">
         <span class="text-lg font-bold tracking-tight">KCN</span>
-        <span class="text-xs opacity-75 hidden sm:inline">鎌倉市民ネット</span>
+        <span class="text-xs opacity-70 hidden sm:inline">鎌倉市民ネット</span>
       </a>
-      <a href={`tel:${SITE.phone.replace(/-/g,'')}`} class="text-xs opacity-90 flex items-center gap-1">
-        <i class="ti ti-phone text-sm"></i>
-        {SITE.phone}
-      </a>
-    </header>
 
-    <!-- main content slot -->
-    <main class="flex-1 pb-20">
-      <slot />
-    </main>
-
-    <!-- bottom navigation -->
-    <nav class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md bg-white border-t border-stone-200 z-40">
-      <ul class="flex justify-around items-center py-2 px-1">
+      <!-- PCのみ表示する横メニュー -->
+      <nav class="hidden md:flex items-center gap-6 ml-4">
         {NAV.map(item => {
           const isActive = page === item.href || (item.href !== '/' && page.startsWith(item.href));
           return (
-            <li>
-              <a
-                href={item.href}
-                class={`flex flex-col items-center gap-0.5 px-2 py-1 rounded-lg text-xs transition-colors
-                  ${isActive ? 'text-[#1a5c3a] font-medium' : 'text-stone-400 hover:text-stone-600'}`}
-              >
-                <i class={`ti ti-${item.icon} text-xl`}></i>
-                <span class="text-[10px]">{item.label}</span>
-              </a>
-            </li>
+            <a href={item.href}
+              class={`text-sm no-underline transition-opacity pb-0.5 ${isActive ? 'text-white border-b-2 border-white font-medium' : 'text-white/80 hover:text-white'}`}>
+              {item.label}
+            </a>
           );
         })}
-      </ul>
-    </nav>
-  </div>
+      </nav>
+
+      <!-- 右側：電話＋CTA -->
+      <div class="ml-auto flex items-center gap-3 flex-shrink-0">
+        <a href={`tel:${SITE.phone.replace(/-/g,'')}`} class="text-xs text-white/90 flex items-center gap-1 no-underline">
+          <i class="ti ti-phone text-sm"></i>
+          <span class="hidden sm:inline">{SITE.phone}</span>
+        </a>
+        <a href="/contact" class="hidden md:inline-block bg-white text-[#1a5c3a] text-xs font-medium px-3 py-1.5 rounded-full no-underline hover:bg-stone-100 transition-colors">
+          ご相談
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== メインコンテンツ ===== -->
+  <main class="max-w-5xl mx-auto pb-24 md:pb-12 bg-white md:bg-transparent">
+    <slot />
+  </main>
+
+  <!-- ===== 下部ナビ（スマホのみ） ===== -->
+  <nav class="md:hidden fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md bg-white border-t border-stone-200 z-40">
+    <ul class="flex justify-around items-center py-2 px-1">
+      {NAV.map(item => {
+        const isActive = page === item.href || (item.href !== '/' && page.startsWith(item.href));
+        return (
+          <li>
+            <a href={item.href}
+              class={`flex flex-col items-center gap-0.5 px-2 py-1 rounded-lg text-xs transition-colors
+                ${isActive ? 'text-[#1a5c3a] font-medium' : 'text-stone-400 hover:text-stone-600'}`}>
+              <i class={`ti ti-${item.icon} text-xl`}></i>
+              <span class="text-[10px]">{item.label}</span>
+            </a>
+          </li>
+        );
+      })}
+    </ul>
+  </nav>
 
 </body>
 </html>
